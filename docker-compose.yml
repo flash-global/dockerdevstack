@@ -27,7 +27,7 @@ services:
         ipv4_address: 172.80.0.42
 
   traefik:
-    container_name: pricer-reverse-proxy
+    container_name: reverse-proxy
     image: traefik
     command: --web --docker --logLevel=DEBUG
     ports:
