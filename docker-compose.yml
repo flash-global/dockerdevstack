@@ -1,0 +1,70 @@
+version: '2'
+services:
+  mysql55:
+    container_name: qa_db
+    image: mysql:5.5
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: ${DBNAME}
+      MYSQL_USER: ${DBUSER}
+      MYSQL_PASSWORD: ${DBPASSWORD}
+    networks:
+      - dev-stack_net
+    volumes:
+      - "$PWD/data/qa:/var/lib/mysql"
+      - "$PWD/data/qa/init:/docker-entrypoint-initdb.d"
+
+  selenium:
+    container_name: selenium
+    image: selenium/standalone-chrome:3.1.0
+    expose:
+      - 4444
+      - 9625
+    ports:
+      - "4444:4444"
+    networks:
+      dev-stack_net:
+        ipv4_address: 172.80.0.42
+
+  traefik:
+    container_name: pricer-reverse-proxy
+    image: traefik
+    command: --web --docker --logLevel=DEBUG
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./traefik.toml:/traefik.toml"
+    networks:
+      dev-stack_net:
+        ipv4_address: 172.80.0.10 # We want a fix IP for a authentication control to the App
+
+  influxdb:
+    image: tutum/influxdb
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+    volumes:
+      - "$PWD/data/influxdb:/var/lib/influxdb"
+    environment:
+      PRE_CREATE_DB: "instrument"
+    networks:
+      - dev-stack_net
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - "$PWD/data/grafana:/var/lib/grafana"
+    networks:
+      - dev-stack_net
+
+networks:
+  dev-stack_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.80.0.0/16
+          gateway: 172.80.0.80
