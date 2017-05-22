@@ -1,2 +1,8 @@
 .env
 .idea/
+
+data/grafana/plugins
+data/grafana/grafana.db
+
+data/qa/
+!data/qa/init

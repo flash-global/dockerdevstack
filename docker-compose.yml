@@ -13,6 +13,8 @@ services:
     volumes:
       - "$PWD/data/qa:/var/lib/mysql"
       - "$PWD/data/qa/init:/docker-entrypoint-initdb.d"
+    labels:
+      traefik.enable: "false"
 
   selenium:
     container_name: selenium
@@ -25,20 +27,29 @@ services:
     networks:
       dev-stack_net:
         ipv4_address: 172.80.0.42
+    labels:
+      traefik.enable: "false"
 
   traefik:
     container_name: reverse-proxy
     image: traefik
     command: --web --docker --logLevel=DEBUG
+    expose:
+      - 80
+      - 8080
+      - 443
     ports:
       - "80:80"
       - "8080:8080"
+      - "443:443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./traefik.toml:/traefik.toml"
     networks:
       dev-stack_net:
         ipv4_address: 172.80.0.10 # We want a fix IP for a authentication control to the App
+    labels:
+      traefik.enable: "false"
 
   influxdb:
     image: tutum/influxdb
@@ -51,6 +62,8 @@ services:
       PRE_CREATE_DB: "instrument"
     networks:
       - dev-stack_net
+    labels:
+      traefik.enable: "false"
 
   grafana:
     image: grafana/grafana
@@ -60,6 +73,8 @@ services:
       - "$PWD/data/grafana:/var/lib/grafana"
     networks:
       - dev-stack_net
+    labels:
+      traefik.enable: "false"
 
 networks:
   dev-stack_net:
