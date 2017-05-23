@@ -57,7 +57,7 @@ services:
       - "8083:8083"
       - "8086:8086"
     volumes:
-      - "$PWD/data/influxdb:/var/lib/influxdb"
+      - "$PWD/data/influxdb:/data"
     environment:
       PRE_CREATE_DB: "instrument"
     networks:

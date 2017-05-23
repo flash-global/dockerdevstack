@@ -1,8 +1,10 @@
-.env
 .idea/
 
-data/grafana/plugins
-data/grafana/grafana.db
+data/grafana/
+!data/grafana/.gitkeep
 
 data/qa/
-!data/qa/init
+!data/qa/init/.gitkeep
+
+data/influxdb/
+!data/influxdb/.gitkeep

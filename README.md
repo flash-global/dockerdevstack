@@ -1,2 +1,55 @@
 Flash Europe International Development Stack
 ========
+
+## Purpose
+ As a development team, a lot  of tools are necessary for the development of the application.
+ 
+ In order to facilitate the setup of the environment for the new developers and centralize the dependencies on each computer
+ regardless of the OS, we created this repo.
+ 
+ With this repository, we can now maintain easily our development stack.
+ 
+## Description
+ Here are the description of the content of the project:
+ * The `docker-compose.yml` is the main file. It contain all the description of the different services used commonly in all of our projects.
+ * The `data` folder will contain all databases files for keeping persistence of their data even if the containers are shutdown.
+ * The `env` file should contain all environment variable used in the `docker-compose.yml`file
+ * The `traefik.toml` file contain the configuration of traefik.
+ 
+## Prerequisites
+ Docker and docker-compose needs to be installed on your machine. Check
+ the [docker website](https://docs.docker.com/engine/installation/) for more informations.
+
+## Usage
+ 1. Modify the .env file with the correct value if necessary.
+ 2. Run `docker-compose up` at the repository's root.
+ 3. If you use docker-compose for your other project:
+    1. Modify your `docker-compose.yml` and add 
+    ```
+    dev_stack_net:
+        external:
+          name: dockerdevstack_dev-stack_net
+    ```
+    2. Add to an exposed webserver
+    ```
+    labels:
+          traefik.frontend.rule: "Host:example.com"
+          traefik.backend: "service-name"
+          traefik.docker.network: "dockerdevstack_dev-stack_net"
+    ```
+    2. run `docker-compose up` in your project.
+    3. Add the new host to your `/etc/hosts` (`127.0.0.1 example.com` in this case)
+    4. You should now have access to the network of the dev stack in your project and the webserver should now be available at `example.com` 
+ 4. Profit!
+ 
+## Todo
+ * [ ] Update the `docker-compose` version from 2 to 3.
+
+## Tools used
+
+* [Mysql](https://www.mysql.com/) - Relational database
+* [Docker](https://www.docker.com/) - Software container platform
+* [Selenium](http://www.seleniumhq.org/) - Software-testing framework for web applications
+* [Traefik](https://traefik.io/) - Modern HTTP reverse proxy and load balancer
+* [InfluxDB](https://www.influxdata.com/) - Scalable datastore for metrics
+* [Grafana](https://grafana.com/) - Feature rich metrics dashboard and graph editor
