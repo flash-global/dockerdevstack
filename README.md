@@ -21,10 +21,12 @@ Flash Europe International Development Stack
  the [docker website](https://docs.docker.com/engine/installation/) for more informations.
 
 ## Usage
- 1. Modify the .env file with the correct value if necessary.
- 2. Run `docker-compose up` at the repository's root.
- 3. If you use docker-compose for your other project:
-    1. Modify your `docker-compose.yml` and add 
+ 1. Clone the project.
+ 2. Rename the `.env.example` to `.env`.
+ 3. Modify the .env file with the correct value if necessary.
+ 4. Run `docker-compose up` at the repository's root.
+ 5. If you use docker-compose for your other projects:
+    1. Modify the projects' `docker-compose.yml` and add 
     ```
     dev_stack_net:
         external:
@@ -40,10 +42,11 @@ Flash Europe International Development Stack
     2. run `docker-compose up` in your project.
     3. Add the new host to your `/etc/hosts` (`127.0.0.1 example.com` in this case)
     4. You should now have access to the network of the dev stack in your project and the webserver should now be available at `example.com` 
- 4. Profit!
+ 6. Profit!
  
 ## Todo
  * [ ] Update the `docker-compose` version from 2 to 3.
+ * [ ] Add a more descriptive purpose section to the readme.
 
 ## Tools used
 
