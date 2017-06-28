@@ -9,6 +9,8 @@ Flash Europe International Development Stack
  
  With this repository, we can now maintain easily our development stack.
  
+## How it works
+ 
 ## Description
  Here are the description of the content of the project:
  * The `docker-compose.yml` is the main file. It contain all the description of the different services used commonly in all of our projects.
