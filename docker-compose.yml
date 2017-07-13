@@ -50,7 +50,19 @@ services:
         ipv4_address: 172.80.0.10 # We want a fix IP for a authentication control to the App
     labels:
       traefik.enable: "false"
-#
+
+  beanstalk:
+    container_name: beanstalk
+    image: schickling/beanstalkd:latest
+    expose:
+      - 11300
+    command: ["beanstalkd", "-p", "11300", "-z", "134217728"]
+    ports:
+      - "11300:11300"
+    networks:
+      - dev_stack_net
+
+# Not used for the moment
 #  influxdb:
 #    image: tutum/influxdb
 #    ports:
