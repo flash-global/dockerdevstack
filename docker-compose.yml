@@ -1,7 +1,7 @@
 version: '2'
 services:
   mysql55:
-    container_name: qa_db
+    container_name: mysql55
     image: mysql:5.5
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
@@ -9,7 +9,7 @@ services:
       MYSQL_USER: ${DBUSER}
       MYSQL_PASSWORD: ${DBPASSWORD}
     networks:
-      - dev-stack_net
+      - dev_stack_net
     volumes:
       - "$PWD/data/qa:/var/lib/mysql"
       - "$PWD/data/qa/init:/docker-entrypoint-initdb.d"
@@ -25,7 +25,7 @@ services:
     ports:
       - "4444:4444"
     networks:
-      dev-stack_net:
+      dev_stack_net:
         ipv4_address: 172.80.0.42
     labels:
       traefik.enable: "false"
@@ -46,38 +46,38 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./traefik.toml:/traefik.toml"
     networks:
-      dev-stack_net:
+      dev_stack_net:
         ipv4_address: 172.80.0.10 # We want a fix IP for a authentication control to the App
     labels:
       traefik.enable: "false"
-
-  influxdb:
-    image: tutum/influxdb
-    ports:
-      - "8083:8083"
-      - "8086:8086"
-    volumes:
-      - "$PWD/data/influxdb:/data"
-    environment:
-      PRE_CREATE_DB: "instrument"
-    networks:
-      - dev-stack_net
-    labels:
-      traefik.enable: "false"
-
-  grafana:
-    image: grafana/grafana
-    ports:
-      - "3000:3000"
-    volumes:
-      - "$PWD/data/grafana:/var/lib/grafana"
-    networks:
-      - dev-stack_net
-    labels:
-      traefik.enable: "false"
+#
+#  influxdb:
+#    image: tutum/influxdb
+#    ports:
+#      - "8083:8083"
+#      - "8086:8086"
+#    volumes:
+#      - "$PWD/data/influxdb:/data"
+#    environment:
+#      PRE_CREATE_DB: "instrument"
+#    networks:
+#      - dev_stack_net
+#    labels:
+#      traefik.enable: "false"
+#
+#  grafana:
+#    image: grafana/grafana
+#    ports:
+#      - "3000:3000"
+#    volumes:
+#      - "$PWD/data/grafana:/var/lib/grafana"
+#    networks:
+#      - dev_stack_net
+#    labels:
+#      traefik.enable: "false"
 
 networks:
-  dev-stack_net:
+  dev_stack_net:
     driver: bridge
     ipam:
       config:
