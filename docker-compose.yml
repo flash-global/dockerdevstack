@@ -61,8 +61,11 @@ services:
       - "11300:11300"
     networks:
       - dev_stack_net
+    labels:
+      traefik.enable: "false"
 
 # Not used for the moment
+
 #  influxdb:
 #    image: tutum/influxdb
 #    ports:
