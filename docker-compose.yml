@@ -91,6 +91,20 @@ services:
 #    labels:
 #      traefik.enable: "false"
 
+  memcached:
+    image: memcached:latest
+    expose:
+      - 11211
+    networks:
+      - dev_stack_net
+
+  memcached2:
+    image: memcached:latest
+    expose:
+      - 11211
+    networks:
+      - dev_stack_net
+
 networks:
   dev_stack_net:
     driver: bridge
