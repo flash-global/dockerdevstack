@@ -10,6 +10,8 @@ services:
       MYSQL_PASSWORD: ${DBPASSWORD}
     networks:
       - dev_stack_net
+    ports:
+      - "3306:3306"
     volumes:
       - "$PWD/data/qa:/var/lib/mysql"
       - "$PWD/data/qa/init:/docker-entrypoint-initdb.d"
