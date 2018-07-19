@@ -51,10 +51,48 @@ Flash Europe International Development Stack
  * [ ] Add a more descriptive purpose section to the readme.
 
 ## Tools used
-
 * [Mysql](https://www.mysql.com/) - Relational database
 * [Docker](https://www.docker.com/) - Software container platform
 * [Selenium](http://www.seleniumhq.org/) - Software-testing framework for web applications
 * [Traefik](https://traefik.io/) - Modern HTTP reverse proxy and load balancer
 * [InfluxDB](https://www.influxdata.com/) - Scalable datastore for metrics
 * [Grafana](https://grafana.com/) - Feature rich metrics dashboard and graph editor
+
+## Troubleshooting
+On Mac, an issue is occurring when trying to start the docker.
+Traefik emits an error with port 80.
+
+Solutions : 
+- Check if an apache is already started on the machine :
+    ``sudo apachectl stop``
+    ``sudo /usr/sbin/apachectl stop``
+- Rename your local folder docker-dev-stack to dockerdevstack
+- Run this script to clean all of the docker : 
+    ```
+      # Stop all containers`
+      docker stop `docker ps -qa`
+      
+      # Remove all containers
+      docker rm `docker ps -qa`
+      
+      # Remove all images
+      docker rmi -f `docker images -qa `
+      
+      # Remove all volumes
+      docker volume rm $(docker volume ls -qf)
+      
+      # Remove all networks
+      docker network rm `docker network ls -q`
+      
+      # Your installation should now be all fresh and clean.
+      
+      # The following commands should not output any items:
+      # docker ps -a
+      # docker images -a
+      # docker volume ls
+      
+      # The following command show only show the default networks:
+      # docker network ls
+    ```
+    
+Note that these solutions don't all need to be tested to make it run.
