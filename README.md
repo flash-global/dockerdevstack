@@ -65,7 +65,7 @@ Traefik emits an error with port 80.
 Solutions : 
 - Check if an apache is already started on the machine :
     ``sudo apachectl stop``
-    `sudo /usr/sbin/apachectl stop``
+    ``sudo /usr/sbin/apachectl stop``
 - Rename your local folder docker-dev-stack to dockerdevstack
 - Run this script to clean all of the docker : 
     ```
