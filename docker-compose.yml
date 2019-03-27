@@ -56,7 +56,7 @@ services:
     image: schickling/beanstalkd:latest
     expose:
       - 11300
-    command: ["beanstalkd", "-p", "11300", "-z", "134217728"]
+    command: ["-p", "11300", "-z", "134217728"]
     ports:
       - "11300:11300"
     networks:
@@ -104,6 +104,16 @@ services:
       - 11211
     networks:
       - dev_stack_net
+
+  beanstalk_console:
+    image: kusmierz/beanstalk-console
+    networks:
+      - dev_stack_net
+    expose:
+      - 80
+    labels:
+      traefik.frontend.rule: "Host:beanstalk-console.local"
+      traefik.backend: "beanstalk-console"
 
 networks:
   dev_stack_net:
