@@ -32,7 +32,7 @@ services:
 
   traefik:
     container_name: reverse-proxy
-    image: traefik
+    image: traefik:v1.7
     command: --web --docker --logLevel=DEBUG
     expose:
       - 80
