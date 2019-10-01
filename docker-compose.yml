@@ -64,32 +64,32 @@ services:
     labels:
       traefik.enable: "false"
 
-# Not used for the moment
+  # Not used for the moment
 
-#  influxdb:
-#    image: tutum/influxdb
-#    ports:
-#      - "8083:8083"
-#      - "8086:8086"
-#    volumes:
-#      - "$PWD/data/influxdb:/data"
-#    environment:
-#      PRE_CREATE_DB: "instrument"
-#    networks:
-#      - dev_stack_net
-#    labels:
-#      traefik.enable: "false"
-#
-#  grafana:
-#    image: grafana/grafana
-#    ports:
-#      - "3000:3000"
-#    volumes:
-#      - "$PWD/data/grafana:/var/lib/grafana"
-#    networks:
-#      - dev_stack_net
-#    labels:
-#      traefik.enable: "false"
+  #  influxdb:
+  #    image: tutum/influxdb
+  #    ports:
+  #      - "8083:8083"
+  #      - "8086:8086"
+  #    volumes:
+  #      - "$PWD/data/influxdb:/data"
+  #    environment:
+  #      PRE_CREATE_DB: "instrument"
+  #    networks:
+  #      - dev_stack_net
+  #    labels:
+  #      traefik.enable: "false"
+  #
+  #  grafana:
+  #    image: grafana/grafana
+  #    ports:
+  #      - "3000:3000"
+  #    volumes:
+  #      - "$PWD/data/grafana:/var/lib/grafana"
+  #    networks:
+  #      - dev_stack_net
+  #    labels:
+  #      traefik.enable: "false"
 
   memcached:
     image: memcached:latest
@@ -114,6 +114,23 @@ services:
     labels:
       traefik.frontend.rule: "Host:beanstalk-console.local"
       traefik.backend: "beanstalk-console"
+
+  service_websocket:
+    build:
+      context: ./data/websocket/
+    container_name: "service_websocket"
+    ports:
+      - "3000:3000"
+    networks:
+      - dev_stack_net
+
+  redis:
+    image: redis:3.2-alpine
+    container_name: "service_websocket_redis"
+    ports:
+      - "6379:6379"
+    networks:
+      - dev_stack_net
 
 networks:
   dev_stack_net:
