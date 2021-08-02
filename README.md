@@ -59,7 +59,18 @@ Flash Europe International Development Stack
 * [Grafana](https://grafana.com/) - Feature rich metrics dashboard and graph editor
 
 ## Troubleshooting
-On Mac, an issue is occurring when trying to start the docker.
+On Linux, an issue is occurring when trying to start the docker.  
+Traefik emits an error with port 80.  
+
+Solution :  
+- You need to check if another process is using the port 80.  
+  `sudo netstat -plnt | grep 80`  
+- If a process is using the port 80, you need to kill or just stop it. Before killing or stopping it, make sure that process isn't critical.  
+  Stopping apache2 process example : `sudo systemctl stop apache2`   
+- Now, you can start your containers by typing `docker-compose up` or `docker-compose up -d`  
+
+
+On Mac, an issue is also occurring when trying to start the docker.
 Traefik emits an error with port 80.
 
 Solutions : 
